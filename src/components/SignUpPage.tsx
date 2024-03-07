@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 interface FormData {
   username?: string;
   email?: string;
+  mobile?: number;
+  profilePic?: string;
   password?: string;
 }
 
@@ -25,7 +27,7 @@ export default function SignUp() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch('http://13.127.219.2:3000/api/v1/auth/signup', {
+      const res = await fetch('http://localhost:2024/api/v1/user/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +43,7 @@ export default function SignUp() {
       }
       setLoading(false);
       setError(null);
-      navigate('/sign-in');
+      navigate('/signin');
     } catch (error) {
       setLoading(false);
       setError((error as any).message);
@@ -67,6 +69,20 @@ export default function SignUp() {
           onChange={handleChange}
         />
         <input
+          type='number'
+          placeholder='mobile'
+          className='border p-3 rounded-lg'
+          id='mobile'
+          onChange={handleChange}
+        />
+        <input
+          type='profilePic'
+          placeholder='profilePic'
+          className='border p-3 rounded-lg'
+          id='profilePic'
+          onChange={handleChange}
+        />
+        <input
           type='password'
           placeholder='password'
           className='border p-3 rounded-lg'
@@ -83,7 +99,7 @@ export default function SignUp() {
       </form>
       <div className='flex gap-2 mt-5'>
         <p>Have an account?</p>
-        <Link to={'/sign-in'}>
+        <Link to='/signin'>
           <span className='text-blue-700'>Sign in</span>
         </Link>
       </div>
